@@ -12,27 +12,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class TodosController {
     
-    @Autowired
-    TodoRepository todoRepository;
-    
     @GetMapping("/")
     public String home(Model model) {
-        var allTodos = todoRepository.findAll();
+    	List<Todo> list = new ArrayList<>();  
+    	list.add(new Todo("Mis tareas pendientes edwin"));
         model.addAttribute("title", "Welcome to Spring Boot on Railway!");
-        model.addAttribute("todos", allTodos);
+        model.addAttribute("todos", list);
         return "home";
     }
     
     @PostMapping("/create")
     public String createTodo(@RequestParam String content) {
-        Todo newTodo = new Todo(content);
-        todoRepository.save(newTodo);
+        Todo newTodo = new Todo(content);    
         return "redirect:/";
     }
 
     @PostMapping("/delete")
     public String deleteTodo(@RequestParam Long id) {
-        todoRepository.deleteById(id);
+       
         return "redirect:/";
     }
 }
